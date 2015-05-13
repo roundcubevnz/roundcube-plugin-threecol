@@ -5,7 +5,7 @@
 #mailview-tc-mid
 {
   position: absolute;
-  top: 42px;
+  top: 0;
   left: 0;
   right: 0;
   width: 100%;
@@ -16,7 +16,7 @@
 {
   position: absolute;
   display: none;
-  top: 42px;
+  top: 0;
   left: 712px;
   right: 0;
   bottom: 0;
@@ -31,7 +31,7 @@
 
 #messagelistfooter
 {
-  height: 54px;
+  height: 20px;
 }
 
 #mailpreviewframe
