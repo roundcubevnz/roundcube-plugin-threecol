@@ -24,14 +24,9 @@
   height: auto;
 }
 
-#messagelistcontainer
-{
-  bottom: 60px;
-}
-
 #messagelistfooter
 {
-  height: 20px;
+  height: 21px;
 }
 
 #mailpreviewframe
