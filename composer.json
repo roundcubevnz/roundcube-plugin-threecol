@@ -1,0 +1,26 @@
+​{
+​    "name": "nexos/threecol",
+​    "type": "roundcube-plugin",
+​    "description": "Preview Pane on the right aka Vertical layout",
+​    "homepage": "https://github.com/EstudioNexos/Roundcube-Plugin-Threecol-Layout",
+​    "license": "AGPLv3",
+​    "version": "1.2.1",
+​    "authors": [
+​        {
+​            "name": "JohnDoh",
+​            "email": "roundcube@tehinterweb.co.uk",
+​            "role": "Creator"
+​        }
+​    ],
+​    "repositories": [
+​        {
+​            "type": "composer",
+​            "url": "http://plugins.roundcube.net"
+​        }
+​    ],
+​    "require": {
+​        "php": ">=5.3.0",
+​        "roundcube/plugin-installer": ">=0.1.3",
+​        "roundcube/jqueryui": ">=1.10.4"
+​    }
+​}
