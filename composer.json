@@ -1,5 +1,5 @@
 {
-  "name": "threecol",
+  "name": "EstudioNexos/threecol",
   "type": "roundcube-plugin",
   "description": "Preview Pane on the right aka Vertical layout",
   "homepage": "https://github.com/EstudioNexos/Roundcube-Plugin-Threecol-Layout",
