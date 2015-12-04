@@ -2,8 +2,8 @@
   "name": "EstudioNexos/threecol",
   "type": "roundcube-plugin",
   "description": "Preview Pane on the right aka Vertical layout",
-  "homepage": "https://github.com/EstudioNexos/Roundcube-Plugin-Threecol-Layout",
-  "license": "AGPLv3",
+  "homepage": "https://github.com/EstudioNexos/threecol",
+  "license": "GPLv3",
   "version": "1.2.1",
   "authors": [
         {
