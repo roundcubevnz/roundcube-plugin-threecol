@@ -1,5 +1,4 @@
 <?php
-
 /**
  * ThreeCol
  *
@@ -10,6 +9,7 @@
  */
 class threecol extends rcube_plugin
 {
+
 	public $task = 'mail|settings';
 	private $driver;
 
@@ -17,46 +17,35 @@ class threecol extends rcube_plugin
 	{
 		$rcmail = rcube::get_instance();
 		$no_override = array_flip($rcmail->config->get('dont_override', array()));
-		$this->driver = $this->home .'/skins/'. $rcmail->config->get('skin') .'/func.php';
+		$this->driver = $this->home . '/skins/' . $rcmail->config->get('skin') . '/func.php';
 
-		if (is_readable($this->driver)) {
-			if ($rcmail->task == 'mail' && $rcmail->action == '' && $rcmail->config->get('previewpane_layout', 'below') == 'right') {
-					$this->add_hook('render_page', array($this, 'render'));
-					$this->include_script($this->local_skin_path() .'/threecol.js');
-					$this->include_stylesheet($this->local_skin_path() .'/threecol.css');
-			}
-			elseif ($rcmail->task == 'settings' && !isset($no_override['previewpane_layout'])) {
-				$this->add_hook('preferences_list', array($this, 'show_settings'));
-				$this->add_hook('preferences_save', array($this, 'save_settings'));
-			}
-		}
-		else {
-			rcube::raise_error(array(
-				'code' => 600,
-				'type' => 'php',
-				'file' => __FILE__,
-				'line' => __LINE__,
-				'message' => "ThreeCol plugin: Unable to open driver file $this->driver"
-				), true, false);
+		if ($rcmail->task == 'mail' && $rcmail->action == '' && $rcmail->config->get('previewpane_layout', 'below') == 'right') {
+			$this->add_hook('render_page', array($this, 'render'));
+		} elseif ($rcmail->task == 'settings' && !isset($no_override['previewpane_layout'])) {
+			$this->add_hook('preferences_list', array($this, 'show_settings'));
+			$this->add_hook('preferences_save', array($this, 'save_settings'));
 		}
 	}
 
 	function render($args)
 	{
-		include_once($this->driver);
+		$this->include_script($this->local_skin_path() . '/threecol.js');
+		$this->include_stylesheet($this->local_skin_path() . '/threecol.css');
 
-		if (!function_exists('render_page')) {
-			rcube::raise_error(array(
-				'code' => 600,
-				'type' => 'php',
-				'file' => __FILE__,
-				'line' => __LINE__,
-				'message' => "ThreeCol plugin: Broken driver: $this->driver"
-				), true, false);
+		if (is_readable($this->driver)) {
+			include_once($this->driver);
+			if (!function_exists('render_page')) {
+				rcube::raise_error(array(
+					'code' => 600,
+					'type' => 'php',
+					'file' => __FILE__,
+					'line' => __LINE__,
+					'message' => "ThreeCol plugin: Broken driver: $this->driver"
+					), true, false);
+			}
+
+			$args = render_page($args);
 		}
-
-		$args = render_page($args);
-
 		return $args;
 	}
 
@@ -67,9 +56,9 @@ class threecol extends rcube_plugin
 
 			$field_id = 'rcmfd_previewpane_layout';
 			$select = new html_select(array('name' => '_previewpane_layout', 'id' => $field_id));
-			$select->add(rcmail::Q($this->gettext('threecol.none')), 'none');
-			$select->add(rcmail::Q($this->gettext('threecol.below')), 'below');
-			$select->add(rcmail::Q($this->gettext('threecol.right')), 'right');
+			$select->add(rcmail::Q($this->gettext('none')), 'none');
+			$select->add(rcmail::Q($this->gettext('below')), 'below');
+			$select->add(rcmail::Q($this->gettext('right')), 'right');
 
 			// add new option at the top of the list
 			$val = rcube::get_instance()->config->get('preview_pane') ? rcube::get_instance()->config->get('previewpane_layout', 'below') : 'none';
@@ -88,6 +77,7 @@ class threecol extends rcube_plugin
 
 		return $args;
 	}
+
 }
 
 ?>
