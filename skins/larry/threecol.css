@@ -1,49 +1,25 @@
-/**
- * ThreeCol plugin styles
- */
-
-#mailview-tc-mid
-{
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  bottom: 0;
+/* Adjust layouts for mail list and preview to work nicely with vertical layout*/
+.vertical-mail-view #mailview-top {
+	height: auto !important;
+	width: 50%;
 }
-
-#mailview-tc-right
-{
-  position: absolute;
-  display: none;
-  top: 0;
-  left: 712px;
-  right: 0;
-  bottom: 0;
-  width: auto;
-  height: auto;
+/* Hide the preview pane, then show when loaded (reduce onload layout change)*/
+#mailview-bottom {
+	visibility: hidden;
 }
-
-#messagelistfooter
-{
-  height: 21px;
+.vertical-mail-view #mailview-bottom {
+	visibility: visible;
 }
-
-#mailpreviewframe
-{
-/*  bottom: 0;*/
+/* hide the preview toggle - doesn't play nice with vertical layout */
+.vertical-mail-view #mailpreviewtoggle {
+	display: none;
 }
-
-#mailpreviewtoggle
-{
-	background: url(buttons.png) -3px 0 no-repeat;
+/* Ensure the subject column isn't collapsed completely */
+.vertical-mail-view .messagelist thead tr th.subject, 
+.messagelist tbody tr td.subject{
+	width: 200px;
 }
-
-#mailpreviewtoggle.enabled
-{
-	background-position: -28px 0;
-}
-#messagecontframe
-{
-	border-radius: 4px 4px 4px 4px;
+/* Add a space after the pagination controls since it's been moved '*/
+.vertical-mail-view #messagelistfooter #countcontrols {
+	margin-right: 0.25em;
 }
