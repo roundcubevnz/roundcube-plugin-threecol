@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ThreeCol
  *
@@ -6,14 +7,22 @@
  *
  * @version @package_version@
  * @author Philip Weir
+ * @author James Buncle <jbuncle@names.co.uk>
  */
 class threecol extends rcube_plugin
 {
+	const LAYOUT_NONE = 'none';
+	const LAYOUT_BELOW = 'below';
+	const LAYOUT_RIGHT = 'right';
+	const CONFIG_LAYOUT = 'previewpane_layout';
+	const CONFIG_PANE = 'preview_pane';
+	const PREFERENCE_LAYOUT = 'previewpane_layout';
+	const INPUT_LAYOUT = '_previewpane_layout';
 
 	public $task = 'mail|settings';
 	private $driver;
 
-	function init()
+	public function init()
 	{
 		$rcmail = rcube::get_instance();
 		$no_override = array_flip($rcmail->config->get('dont_override', array()));
@@ -27,7 +36,7 @@ class threecol extends rcube_plugin
 		}
 	}
 
-	function render($args)
+	public function render($args)
 	{
 		$this->include_script($this->local_skin_path() . '/threecol.js');
 		$this->include_stylesheet($this->local_skin_path() . '/threecol.css');
@@ -49,35 +58,60 @@ class threecol extends rcube_plugin
 		return $args;
 	}
 
-	function show_settings($args)
+	public function show_settings($args)
 	{
 		if ($args['section'] == 'mailbox') {
 			$this->add_texts('localization/');
 
 			$field_id = 'rcmfd_previewpane_layout';
-			$select = new html_select(array('name' => '_previewpane_layout', 'id' => $field_id));
-			$select->add(rcmail::Q($this->gettext('none')), 'none');
-			$select->add(rcmail::Q($this->gettext('below')), 'below');
-			$select->add(rcmail::Q($this->gettext('right')), 'right');
+			$select = new html_select(array('name' => self::INPUT_LAYOUT, 'id' => $field_id));
+			$select->add(rcmail::Q($this->gettext('none')), self::LAYOUT_NONE);
+			$select->add(rcmail::Q($this->gettext('below')), self::LAYOUT_BELOW);
+			$select->add(rcmail::Q($this->gettext('right')), self::LAYOUT_RIGHT);
 
 			// add new option at the top of the list
-			$val = rcube::get_instance()->config->get('preview_pane') ? rcube::get_instance()->config->get('previewpane_layout', 'below') : 'none';
+			$val = $this->get_current_preference();
 			$args['blocks']['main']['options']['preview_pane']['content'] = $select->show($val);
 		}
 
 		return $args;
 	}
 
-	function save_settings($args)
+	private function get_current_preference()
+	{
+		$prefs = rcmail::get_instance()->user->get_prefs();
+		if (array_key_exists(self::PREFERENCE_LAYOUT, $prefs)) {
+			$preference = $prefs[self::PREFERENCE_LAYOUT];
+			if (in_array($preference, [self::LAYOUT_BELOW, self::LAYOUT_RIGHT, self::LAYOUT_NONE,])) {
+				return $preference;
+			}
+		}
+		if (rcube::get_instance()->config->get(self::CONFIG_PANE)){
+			return rcube::get_instance()->config->get(self::CONFIG_LAYOUT,'below');
+		} else {
+			return 'none';
+		}
+	}
+
+	public function save_settings($args)
 	{
 		if ($args['section'] == 'mailbox') {
-			$args['prefs']['preview_pane'] = rcube_utils::get_input_value('_previewpane_layout', rcube_utils::INPUT_POST) == 'none' ? false : true;
-			$args['prefs']['previewpane_layout'] = rcube_utils::get_input_value('_previewpane_layout', rcube_utils::INPUT_POST) != 'none' ? rcube_utils::get_input_value('_previewpane_layout', rcube_utils::INPUT_POST) : rcube::get_instance()->config->get('previewpane_layout', 'below');
+			$newLayout = $this->get_layout_from_post();
+
+			$args['prefs']['preview_pane'] = $newLayout != self::LAYOUT_NONE;
+
+			if ($newLayout != self::LAYOUT_NONE) {
+				$args['prefs'][self::PREFERENCE_LAYOUT] = $newLayout;
+			} else {
+				$args['prefs'][self::PREFERENCE_LAYOUT] = rcube::get_instance()->config->get(self::CONFIG_LAYOUT, self::LAYOUT_BELOW);
+			}
 		}
 
 		return $args;
 	}
 
+	private function get_layout_from_post()
+	{
+		return rcube_utils::get_input_value(self::INPUT_LAYOUT, rcube_utils::INPUT_POST);
+	}
 }
-
-?>

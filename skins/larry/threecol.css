@@ -1,25 +1,27 @@
-/* Adjust layouts for mail list and preview to work nicely with vertical layout*/
-.vertical-mail-view #mailview-top {
-	height: auto !important;
-	width: 50%;
-}
-/* Hide the preview pane, then show when loaded (reduce onload layout change)*/
-#mailview-bottom {
-	visibility: hidden;
-}
-.vertical-mail-view #mailview-bottom {
-	visibility: visible;
-}
-/* hide the preview toggle - doesn't play nice with vertical layout */
-.vertical-mail-view #mailpreviewtoggle {
-	display: none;
-}
-/* Ensure the subject column isn't collapsed completely */
-.vertical-mail-view .messagelist thead tr th.subject, 
-.messagelist tbody tr td.subject{
-	width: 200px;
-}
-/* Add a space after the pagination controls since it's been moved '*/
-.vertical-mail-view #messagelistfooter #countcontrols {
-	margin-right: 0.25em;
+@media only screen and (max-width: 900px)  {
+	/* Adjust layouts for mail list and preview to work nicely with vertical layout*/
+	.vertical-mail-view #mailview-top {
+		height: auto !important;
+		width: 50%;
+	}
+	/* Hide the preview pane, then show when loaded (reduce onload layout change)*/
+	#mailview-bottom {
+		visibility: hidden;
+	}
+	.vertical-mail-view #mailview-bottom {
+		visibility: visible;
+	}
+	/* hide the preview toggle - doesn't play nice with vertical layout */
+	.vertical-mail-view #mailpreviewtoggle {
+		display: none;
+	}
+	/* Ensure the subject column isn't collapsed completely */
+	.vertical-mail-view .messagelist thead tr th.subject, 
+	.messagelist tbody tr td.subject{
+		width: 200px;
+	}
+	/* Add a space after the pagination controls since it's been moved '*/
+	.vertical-mail-view #messagelistfooter #countcontrols {
+		margin-right: 0.25em;
+	}
 }

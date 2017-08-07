@@ -1,5 +1,5 @@
 window.rcmail && rcmail.addEventListener('init', function (evt) {
-	if ($('#mailview-bottom').is(':visible')) {
+	if ($('#mailview-bottom').is(':visible') && $(window).width() > 900) {
 		$(document.body).addClass('vertical-mail-view');
 		var splitter = rcube_splitter.get_instance('mailviewsplitter');		//Tweak layouts ready for splitting
 		$('#mailview-bottom').css('top', 0);
