@@ -15,10 +15,13 @@ window.rcmail && rcmail.addEventListener('init', function (evt) {
 		//Reinitialise
 		splitter.init();
 		splitter.resize();
-
-		//Removed fixed header as it overflows unpleasantly
-		$('#mailview-top .messagelist.fixedheader').first().hide();
-		// Move the pagination controls to allow use in smaller widths
-		$('#countcontrols').prependTo($('#countcontrols').parent());
+		
+		// Disable fixed header (doesn't overflow correctly on small widths)
+		$('#mailview-top .messagelist.fixedheader').first().css({
+			'z-index': 0,
+			'position':'absolute',
+			'top':'0',
+			'left':'0'
+		});
 	}
 });
