@@ -1,10 +1,10 @@
 {
-  "name": "namesco/threecol",
+  "name": "roundcubevnz/threecol",
   "type": "roundcube-plugin",
   "description": "Preview Pane on the right aka Vertical layout",
-  "homepage": "https://github.com/namesco/threecol",
+  "homepage": "https://github.com/roundcubevnz/roundcube-plugin-threecol",
   "license": "GPLv3",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "authors": [
         {
           "name": "JohnDoh",
@@ -14,12 +14,17 @@
     ],
     "repositories": [
         {
-            "type": "composer",
-            "url": "http://plugins.roundcube.net"
+            "type": "git",
+            "url": "https://github.com/roundcubevnz/roundcube-plugin-threecol"
         }
     ],
     "require": {
         "php": ">=5.3.0",
-        "roundcube/plugin-installer": ">=0.1.3"
+    },
+    "extra": {
+        "roundcube": {
+            "min-version": "0.9",
+            "max-version": "1.2.99"
     }
+  }
 }
