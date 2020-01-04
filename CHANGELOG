@@ -1,6 +1,7 @@
 Roundcube Webmail ThreeCol
 ==========================
 
+ * added spanish translator and support for 0.9 and 1.X versions
  * rename default skin to classic (c40419bdfe)
  * rcube_ui > rcube_utils (r6091)
  * Update for Roundcube framework
